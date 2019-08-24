@@ -9,11 +9,6 @@ import javax.persistence.PreUpdate
 
 class ProductItemListener {
 
-    @PreUpdate
-    fun onPreUpdate(productItem: ProductItem) {
-        // do something
-    }
-
     @PreRemove
     fun onPreRemove(productItem: ProductItem) {
         val deletedProductItemRepository = BeanConfig.getBean(DeletedProductItemRepository::class.java)
@@ -21,5 +16,10 @@ class ProductItemListener {
         deletedProductItemRepository.save(
             DeletedProductItem(productItem)
         )
+    }
+
+    @PreUpdate
+    fun onPreUpdate(productItem: ProductItem) {
+        // do something
     }
 }
