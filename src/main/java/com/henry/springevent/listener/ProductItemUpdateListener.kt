@@ -2,6 +2,7 @@ package com.henry.springevent.listener
 
 import com.henry.springevent.dto.ProductItem
 import org.slf4j.LoggerFactory
+import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +29,7 @@ class ProductItemUpdateListener(
     }
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
-    fun listenPreUpdateEvent(event: ProductItem) {
+    fun listenTranBeforeUpdateEvent(event: ProductItem) {
         try {
             val oldApp = finder.findLast(event)
             ProductItemHolder.set(oldApp)
@@ -40,7 +41,7 @@ class ProductItemUpdateListener(
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    fun listenPostUpdateEvent(event: ProductItem) {
+    fun listenTranAfterUpdateEvent(event: ProductItem) {
         try {
             val oldProductItem = ProductItemHolder.get()
             if (Objects.isNull(oldProductItem)) return
@@ -54,6 +55,12 @@ class ProductItemUpdateListener(
         } catch (e: Exception) {
             log.error("LoanAppUpdateEventManager: $e\n{}", e)
         }
+    }
+
+    @EventListener
+    fun listenEagerUpdateEvent(event: ProductItem) {
+        log.info("listen event regardless of transaction")
+        // do something
     }
 }
 
