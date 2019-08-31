@@ -15,3 +15,13 @@ spring:
         query:
           plan_cache_max_size: 32
           plan_parameter_metadata_max_size: 64
+    open-in-view: false
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.orm: DEBUG
+    org.springframework.transaction: TRACE
+
+
+

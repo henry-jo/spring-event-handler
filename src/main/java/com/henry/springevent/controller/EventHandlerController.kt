@@ -2,6 +2,7 @@ package com.henry.springevent.controller
 
 import com.henry.springevent.dto.ProductItem
 import com.henry.springevent.repository.ProductItemRepository
+import com.henry.springevent.service.ProductItemService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/event/handler")
 class EventHandlerController(
+    private val productItemService: ProductItemService,
     private val productItemRepository: ProductItemRepository
 ) {
 
@@ -46,12 +48,7 @@ class EventHandlerController(
         @RequestParam name: String,
         @RequestParam amount: Int
     ): Boolean {
-        val product = productItemRepository.findByName(name)
-            ?: return false
-
-        product.amount = amount
-
-        productItemRepository.save(product)
+        productItemService.update(name, amount)
 
         return true
     }
