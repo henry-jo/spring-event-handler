@@ -9,7 +9,7 @@ spring:
       test-on-borrow: true
       time-between-eviction-runs-millis: 7200000
   jpa:
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         query:
@@ -21,7 +21,7 @@ logging:
   level:
     ROOT: INFO
     org.springframework.orm: DEBUG
-    org.springframework.transaction: TRACE
+    org.springframework.transaction: DEBUG
 
 
 
